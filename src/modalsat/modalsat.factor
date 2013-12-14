@@ -21,19 +21,30 @@ SYMBOL: lor
 SYMBOL: lnot
 SYMBOL: box
 
-: is-atom? ( x -- ? ) first string? ;
+: is-atom? ( x -- ? )
+    first string? ;
 
-: prepare-formula ( x y z -- x y z ) -rot 2array dup dup 3array swap >array 2dup first swap first 2array -rot 2dup second swap first 2array -rot third swap first 2array swap rot -rot swap rot ;
+: get-atoms-in-world ( x y -- x )
+    at
+    dup "|" swap index 1 +
+    tail ;
 
-: get-atoms-in-world ( x y -- x ) at dup "|" swap index 1 + tail ;
-: atom-value-at-world ( x y z -- ? ) first -rot get-atoms-in-world member? ;
+: atom-value-at-world ( x y z -- ? )
+    first -rot get-atoms-in-world member? ;
+
+: prepare-formula ( x y z -- x y z )
+    -rot 2array dup dup 3array swap 2dup first swap first 2array
+    -rot 2dup second swap first 2array -rot third swap first 2array swap swap rot ;
 
 : bimpl ( x y -- ? ) 
     swap not or ;
+
 : band ( x y -- ? ) 
     and ;
+
 : bor ( x y -- ? ) 
     or ;
+
 : bnot ( x y -- ? ) 
     drop not ;
 
@@ -66,6 +77,7 @@ DEFER: is-satisfied-at-world?
 
 : testformula ( -- x ) [ limpl [ "p1" ] [ "p2" ] ] ;
 : testmodel ( -- x )  H{ { 1 { 1 2 "|" "p1" "p3" "p4" } } { 2 { 1 "|" "p2" "p3" } } } ;
+: testinput ( -- x x x ) 1 testmodel testformula ;
 
 : init ( -- x x x ) 1 testmodel testformula prepare-formula first make-connective-quotation first ;
 
