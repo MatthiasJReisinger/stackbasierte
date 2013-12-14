@@ -59,10 +59,12 @@ SYMBOL: box
 
 DEFER: is-satisfied-at-world?
 
+: evaluate-operand ( x y z -- x y ? )
+    rot split-up is-satisfied-at-world? ;
+
 : propositional-connective ( x y z -- x ) 
-    rot split-up is-satisfied-at-world? 
-    rot split-up is-satisfied-at-world? 
-    rot call( x y -- ? ) inline ;
+    evaluate-operand evaluate-operand
+    rot call( x y -- ? ) ;
 
 : make-connective-quotation ( x -- x ) 
     { { limpl [ [ [ bimpl ] propositional-connective ] ] }
@@ -76,14 +78,10 @@ DEFER: is-satisfied-at-world?
     dup is-atom? 
         [ atom-value-at-world ] 
         [ prepare-formula make-connective-quotation call( x y -- x ) ] 
-    if 
-  inline recursive ;
+    if ;
 
-! : testformula ( -- x ) [ limpl [ "p1" ] [ "p2" ] ] ;
 : testformula ( -- x ) { limpl { "p1" } { "p2" } } ;
 : testmodel ( -- x )  H{ { 1 { 1 2 "|" "p1" "p3" "p4" } } { 2 { 1 "|" "p2" "p3" } } } ;
 : testinput ( -- x x x ) 1 testmodel testformula ;
-
-: init ( -- x x x ) 1 testmodel testformula prepare-formula first make-connective-quotation first ;
 
 ! : modalsat ( -- ) ;
