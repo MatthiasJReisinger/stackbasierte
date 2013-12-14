@@ -1,29 +1,97 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Context
-% Overview%Main Contribution
-}
-\ms
+\usetikzlibrary{arrows}
 
-% \bi
-
-% \item[] \cemph{Gentzen-type refutation systems} for two basic \cemph{3-valued logics}.
-% \smallskip
+\begin{frame}{Einf\"uhrung}
 \bi
-\item The traditional view about proof calculi is that they are \cemph{assertional}---their aim is to axiomatise the \cemph{valid propositions} of a logic.\pause
-
-\ms
-\item But we can also have a complementary view:
-
+\item Wir betrachten \cemph{modallogische Formeln}, aufgebaut durch 
 \bi
-\item Instead of axiomatising the valid sentences we may axiomatise the \cemph{invalid} ones.\pause
+	\item \cemph{Atome} $\mathcal{P} = \{p_1,p_2,p_3,\ldots\}$,
+	\item un\"are Junktoren $\neg, \Box, \lozenge$,
+	\item bin\"are Junktoren $\impl, \wedge, \vee$.
+\ei
+\ms
+\item \blue{Beispiele:} 
+\bi
+ \item $\Box p_1 \impl p_1$, 
+ \item $\neg p_2 \vee \Box\lozenge p_1$,
+ \item $\Box p_1 \impl \Box \Box p_1$.
+\ei
+\ei
+\end{frame}
 
-\item In such a system, false propositions are deduced from other (elementary) false ones.\pause
-
+\begin{frame}{Einf\"uhrung (fgs.)}
+Eine \cemph{Kripke-Interpretation} (Interpretation) ist ein Tripel $\mathcal{M} = \langle W, R, v\rangle$, wobei\pause
+\bi
+	\item $W$ eine nicht-leere Menge ist (die Menge der \cemph{m\"oglichen Welten}),\pause
+	\item $R \subseteq W \times W$,\pause
+	\item $v : W \times \mathcal{P} \rightarrow \{0,1\}$.
 \ei
 
-\ms
-\resitem Calculi axiomatising the invalid sentences of a logic are called \cemph{rejection systems} or \cemph{complementary calculi}.%\pause
+\bs
+\pause
 
+\ithand\ Interpretationen definieren Graphen!
+\end{frame}
 
+\begin{frame}{Einf\"uhrung (fgs.)}
+Sei $\mathcal{M} = \langle W, R, v\rangle$ eine Interpretation und $w \in W$. Wir definieren $\mathcal{M}, w \models \varphi$ f\"ur alle Formeln $\varphi$ wie folgt:
+\bi
+	\item $\mathcal{M}, w \models p$ $\iff$ $v(w,p) = 1$ f\"ur ein Atom $p$.
+	\item $\mathcal{M}, w \models \varphi_1 \wedge \varphi_2$ $\iff$ $\mathcal{M}, w \models \varphi_1$ und $\mathcal{M}, w \models \varphi_2$.
+	\item $\mathcal{M}, w \models \varphi_1 \vee \varphi_2$ $\iff$ $\mathcal{M}, w \models \varphi_1$ oder $\mathcal{M}, w \models \varphi_2$.
+	\item $\mathcal{M}, w \models \varphi_1 \impl \varphi_2$ $\iff$ $\mathcal{M}, w \not\models \varphi_1$ oder $\mathcal{M}, w \models \varphi_2$.
+	\item $\mathcal{M}, w \models \neg\varphi$ $\iff$ $\mathcal{M}, w \not\models \varphi$.
+	\item $\mathcal{M}, w \models \Box\varphi$ $\iff$ $\mathcal{M}, w \models \varphi$ \red{f\"ur alle Welten $w'$ mit $wRw'$}.
+	\item $\mathcal{M}, w \models \lozenge\varphi$ $\iff$ $\mathcal{M}, w \models \varphi$ \red{f\"ur mindestens eine Welt $w'$ mit $wRw'$}.
+	
 \ei
+\end{frame}
+
+\begin{frame}{Einf\"uhrung (fgs.)}
+\bi
+\item {\bf Aufgabenstellung:} Gegeben eine modallogische Formel $\varphi$, eine (endliche) Interpretation $\mathcal{M} = \langle W, R, v \rangle$, sowie eine Welt $w \in W$, \"uberpr\"ufe ob $\mathcal{M},w \models \varphi$.
+\ei
+\end{frame}
+
+\begin{frame}{Beispiel}
+\begin{tabular}{llp{2em}|p{2em}ll}
+$1$ & $\textcolor<8->{magenta}{q}$ & & $2$ & $\textcolor<5>{magenta}{p}$ \\
+\hline
+$3$ & $\textcolor<8->{magenta}{q}$ & & $4$ & $\textcolor<5>{magenta}{p}$
+\end{tabular}
+\qquad\qquad Gilt $\Box (p \wedge \lozenge q)$ in Welt $1$?
+
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm,
+  thick,main node/.style={circle,fill=blue!20,draw}]
+
+  \node[main node] (1) [onslide={<2,7,8>{draw=magenta, ultra thick}}] {$1$};
+  \node[main node] (2) [below left of=1, onslide={<3,4,5,6>{draw=magenta, ultra thick}}] {$2$};
+  \node[main node] (3) [below right of=2, onslide={<7,8>{draw=magenta, ultra thick}}] {$3$};
+  \node[main node] (4) [below right of=1, onslide={<3,4,5,6>{draw=magenta, ultra thick}}] {$4$};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (1) edge [bend right, onslide=<3>{magenta,ultra thick}] node[left] {} (2)
+    (2) edge [<->] node {} (4)
+        edge [loop left] node {} (2)
+        edge [bend right,onslide=<7>{magenta,ultra thick}] node[left] {} (3)
+    (3) edge [bend right] node[right] {} (4)
+    (4) edge [loop right] node {} (4)
+        edge [bend right,<->, onslide=<3>{magenta,ultra thick},onslide=<7>{magenta,ultra thick}] node[right] {} (1);
+
+  \uncover<2->{\node (5) [below = .1cm of 1, onslide=<2>{magenta}] {$\Box (p \wedge \lozenge q)$\only<7->{, $\textcolor<7->{magenta}{q}$}};}
+  \uncover<3-3>{\node (6) [above right = .05cm of 2,onslide=<3>{magenta}] {$p \wedge \lozenge q$};}
+  \uncover<3-3>{\node (7) [above left = .05cm of 4,onslide=<3>{magenta}] {$p \wedge \lozenge q$};}
+  \uncover<4->{\node (8) [above right = .05cm of 2,onslide=<4>{magenta}] {$\textcolor<5>{magenta}{p}$, $\textcolor<6>{magenta}{\lozenge q}$};}
+  \uncover<4->{\node (9) [above left = .05cm of 4,onslide=<4>{magenta}] {$\textcolor<5>{magenta}{p}$, $\textcolor<6>{magenta}{\lozenge q}$};}
+  \uncover<7->{\node (10) [above = .05cm of 3,onslide={<7,8>{magenta}}] {$q$};}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}[c,allowframebreaks]
+\begin{center}
+\Huge
+\structure{Demo \& Code}
+\end{center}
 \end{frame}
