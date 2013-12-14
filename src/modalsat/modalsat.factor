@@ -33,8 +33,16 @@ SYMBOL: box
     first -rot get-atoms-in-world member? ;
 
 : prepare-formula ( x y z -- x y z )
-    -rot 2array dup dup 3array swap 2dup first swap first 2array
-    -rot 2dup second swap first 2array -rot third swap first 2array swap swap rot ;
+    -rot 2array over 2dup
+    second
+    swap 2array -rot
+    third
+    swap 2array rot
+    first ;
+
+! : prepare-formula ( x y z -- x y z )
+!     -rot 2array dup dup 3array swap 2dup first swap first 2array
+!     -rot 2dup second swap first 2array -rot third swap first 2array swap swap rot ;
 
 : bimpl ( x y -- ? ) 
     swap not or ;
@@ -71,7 +79,7 @@ DEFER: is-satisfied-at-world?
 : is-satisfied-at-world? ( x y z -- x ) 
     dup is-atom? 
         [ atom-value-at-world ] 
-        [ prepare-formula first make-connective-quotation call( x y -- x ) ] 
+        [ prepare-formula make-connective-quotation call( x y -- x ) ] 
     if 
   inline recursive ;
 
