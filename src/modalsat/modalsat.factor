@@ -71,10 +71,11 @@ SYMBOL: box
 DEFER: is-satisfied-at-world?
 
 : evaluate-operand ( seq1 seq2 quot -- seq2 quot ? )
-    rot split-up is-satisfied-at-world? ;
+    split-up is-satisfied-at-world? ;
 
 : propositional-connective ( seq1 seq2 quot -- ? ) 
-    evaluate-operand evaluate-operand
+    rot evaluate-operand
+    rot evaluate-operand
     rot call( x y -- ? ) ;
 
 ! : modal-connective ( seq1 seq2 quot -- ? )
