@@ -20,6 +20,7 @@ SYMBOL: land
 SYMBOL: lor
 SYMBOL: lnot
 SYMBOL: box
+SYMBOL: dia
 
 : is-atom? ( seq -- ? )
     first string? ;
@@ -65,12 +66,18 @@ SYMBOL: box
 : bnot ( ? ? -- ? ) 
     drop not ;
 
+: mbox ( seq -- ? )
+    [ t? ] all? ;
+
+: mdia ( seq -- ? )
+    [ t? ] any? ;
+
 : split-up ( seq -- elt1 elt2 elt3 ) 
     >quotation call( --  elt1 elt2 elt3 ) ;
 
 DEFER: is-satisfied-at-world?
 
-: evaluate-operand ( seq1 seq2 quot -- seq2 quot ? )
+: evaluate-operand ( seq -- ? )
     split-up is-satisfied-at-world? ;
 
 : propositional-connective ( seq1 seq2 quot -- ? ) 
@@ -78,21 +85,33 @@ DEFER: is-satisfied-at-world?
     rot evaluate-operand
     rot call( ? ? -- ? ) ;
 
+: get-reachable-worlds ( n assoc -- seq )
+    at dup "@" swap index head ;
+
+
 ! Takes an array (seq1) with three elements: the index of a world, a model and
 ! a formula. Outputs an array (seq2) of boolean values.
-: evaluate-adjacent ( seq1 -- seq2 )
-    
-    ;
+: evaluate-reachable ( seq1 -- seq2 )
+    split-up dupd 2array -rot
+    get-reachable-worlds
+    swap
+    [ swap prefix ]
+    curry
+    map
+    [ evaluate-operand ]
+    map ;
 
 : modal-connective ( seq1 seq2 quot -- ? )
-    nip swap evaluate-adjacent
+    nip swap evaluate-reachable
     swap call( seq -- ? ) ;
 
 : make-connective-quotation ( symb -- quot ) 
     { { limpl [ [ [ bimpl ] propositional-connective ] ] }
       { lnot [ [ [ bnot ] propositional-connective ] ] }
       { lor [ [ [ bor ] propositional-connective ] ] }
-      { land  [ [ [ band ] propositional-connective ] ] } } case ;
+      { land  [ [ [ band ] propositional-connective ] ] }
+      { box [ [ [ mbox ] modal-connective ] ] } 
+      { dia [ [ [ mdia ] modal-connective ] ] } } case ;
 
 : is-satisfied-at-world? ( n assoc seq -- ? ) 
     dup is-atom? 
