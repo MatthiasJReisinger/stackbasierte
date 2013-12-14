@@ -50,10 +50,8 @@ SYMBOL: box
 ! type of connective which has to be applied to the operands.
 : prepare-formula ( n assoc seq1 -- seq2 seq3 symb )
     -rot 2array over 2dup
-    second
-    swap 2array -rot
-    third
-    swap 2array rot
+    second suffix -rot
+    third suffix rot
     first ;
 
 : bimpl ( ? ? -- ? ) 
@@ -68,10 +66,8 @@ SYMBOL: box
 : bnot ( ? ? -- ? ) 
     drop not ;
 
-: split-up ( x y z -- v w x y z ) 
-    dup first swap 
-    second dup first 
-    swap second rot ;
+: split-up ( seq -- elt1 elt2 elt3 ) 
+    >quotation call( --  elt1 elt2 elt3 ) ;
 
 DEFER: is-satisfied-at-world?
 
