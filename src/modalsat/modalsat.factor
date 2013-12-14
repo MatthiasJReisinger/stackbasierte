@@ -8,7 +8,8 @@ IN: modalsat
 !
 !      world    neighbours  "|"    Atoms
 !
-! H{ {   1    { 1 2         "|"    "p1"      } } 
+! H{
+!    {   1    { 1 2         "|"    "p1"      } } 
 !    {   2    { 1           "|"    "p2" "p3" } } 
 !  }
 ! 
