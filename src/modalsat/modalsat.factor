@@ -76,11 +76,17 @@ DEFER: is-satisfied-at-world?
 : propositional-connective ( seq1 seq2 quot -- ? ) 
     rot evaluate-operand
     rot evaluate-operand
-    rot call( x y -- ? ) ;
+    rot call( ? ? -- ? ) ;
 
-! : modal-connective ( seq1 seq2 quot -- ? )
-!     
-!     ;
+! Takes an array (seq1) with three elements: the index of a world, a model and
+! a formula. Outputs an array (seq2) of boolean values.
+: evaluate-adjacent ( seq1 -- seq2 )
+    
+    ;
+
+: modal-connective ( seq1 seq2 quot -- ? )
+    nip swap evaluate-adjacent
+    swap call( seq -- ? ) ;
 
 : make-connective-quotation ( symb -- quot ) 
     { { limpl [ [ [ bimpl ] propositional-connective ] ] }
