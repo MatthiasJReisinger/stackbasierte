@@ -1,5 +1,3 @@
-
-
 ! Copyright (C) 2013 <names>.
 ! See http://factorcode.org/license.txt for BSD license.
 USING: kernel sequences math arrays strings io assocs quotations
@@ -72,14 +70,14 @@ SYMBOL: box
 
 DEFER: is-satisfied-at-world?
 
-: evaluate-operand ( x y z -- x y ? )
+: evaluate-operand ( seq1 seq2 quot -- seq2 quot ? )
     rot split-up is-satisfied-at-world? ;
 
 : propositional-connective ( seq1 seq2 quot -- ? ) 
     evaluate-operand evaluate-operand
     rot call( x y -- ? ) ;
 
-! : modal-connective ( x y z -- ? )
+! : modal-connective ( seq1 seq2 quot -- ? )
 !     
 !     ;
 
