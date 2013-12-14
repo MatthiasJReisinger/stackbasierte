@@ -7,14 +7,14 @@ IN: modalsat
 
 ! Model representation
 !
-!      world    neighbours  "|"    Atoms
+!      world    neighbours  "@"    Atoms
 !
 ! H{
-!    {   1    { 1 2         "|"    "p1"      } } 
-!    {   2    { 1           "|"    "p2" "p3" } } 
+!    {   1    { 1 2         "@"    "p1"      } } 
+!    {   2    { 1           "@"    "p2" "p3" } } 
 !  }
 ! 
-! i.e., H{ { 1 { 1 2 "|" "p1" } } { 2 { 1 "|" "p2" "p3" } } }
+! i.e., H{ { 1 { 1 2 "@" "p1" } } { 2 { 1 "@" "p2" "p3" } } }
 
 SYMBOL: limpl
 SYMBOL: land
@@ -30,7 +30,7 @@ SYMBOL: box
 ! within the according world.
 : get-atoms-in-world ( n assoc -- seq )
     at
-    dup "|" swap index 1 +
+    dup "@" swap index 1 +
     tail ;
 
 ! takes as input the wold's index (n) together with
@@ -74,17 +74,19 @@ DEFER: is-satisfied-at-world?
 : evaluate-operand ( x y z -- x y ? )
     rot split-up is-satisfied-at-world? ;
 
-: propositional-connective ( x y z -- x ) 
+: propositional-connective ( seq1 seq2 quot -- ? ) 
     evaluate-operand evaluate-operand
     rot call( x y -- ? ) ;
 
-: make-connective-quotation ( x -- x ) 
+! : modal-connective ( x y z -- ? )
+!     
+!     ;
+
+: make-connective-quotation ( symb -- quot ) 
     { { limpl [ [ [ bimpl ] propositional-connective ] ] }
       { lnot [ [ [ bnot ] propositional-connective ] ] }
       { lor [ [ [ bor ] propositional-connective ] ] }
       { land  [ [ [ band ] propositional-connective ] ] } } case ;
-
-! : modal-connective ( x y z -- ? ) inline ;
 
 : is-satisfied-at-world? ( n assoc seq -- ? ) 
     dup is-atom? 
@@ -93,7 +95,7 @@ DEFER: is-satisfied-at-world?
     if ;
 
 : testformula ( -- x ) { limpl { "p1" } { "p2" } } ;
-: testmodel ( -- x )  H{ { 1 { 1 2 "|" "p1" "p3" "p4" } } { 2 { 1 "|" "p2" "p3" } } } ;
+: testmodel ( -- x )  H{ { 1 { 1 2 "@" "p1" "p3" "p4" } } { 2 { 1 "@" "p2" "p3" } } } ;
 : testinput ( -- x x x ) 1 testmodel testformula ;
 
 ! : modalsat ( -- ) ;
