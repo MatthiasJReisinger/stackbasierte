@@ -40,10 +40,6 @@ SYMBOL: box
     swap 2array rot
     first ;
 
-! : prepare-formula ( x y z -- x y z )
-!     -rot 2array dup dup 3array swap 2dup first swap first 2array
-!     -rot 2dup second swap first 2array -rot third swap first 2array swap swap rot ;
-
 : bimpl ( x y -- ? ) 
     swap not or ;
 
@@ -72,7 +68,7 @@ DEFER: is-satisfied-at-world?
     { { limpl [ [ [ bimpl ] propositional-connective ] ] }
       { lnot [ [ [ bnot ] propositional-connective ] ] }
       { lor [ [ [ bor ] propositional-connective ] ] }
-      { land  [ [ [ band  ] propositional-connective ] ] } } case ;
+      { land  [ [ [ band ] propositional-connective ] ] } } case ;
 
 ! : modal-connective ( x y z -- ? ) inline ;
 
@@ -83,7 +79,8 @@ DEFER: is-satisfied-at-world?
     if 
   inline recursive ;
 
-: testformula ( -- x ) [ limpl [ "p1" ] [ "p2" ] ] ;
+! : testformula ( -- x ) [ limpl [ "p1" ] [ "p2" ] ] ;
+: testformula ( -- x ) { limpl { "p1" } { "p2" } } ;
 : testmodel ( -- x )  H{ { 1 { 1 2 "|" "p1" "p3" "p4" } } { 2 { 1 "|" "p2" "p3" } } } ;
 : testinput ( -- x x x ) 1 testmodel testformula ;
 
