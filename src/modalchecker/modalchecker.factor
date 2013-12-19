@@ -23,12 +23,12 @@ IN: modalchecker
 !   {
 !       land
 !       { "p" }
-!       { dia { "q" } { " " } }
+!       { dia { "q" } { "" } }
 !   }
-!   { " " }
+!   { "" }
 ! }
 !
-! i.e., { box { land { "p" } { dia { "q" } { " " } } } { " " } }
+! i.e., { box { land { "p" } { dia { "q" } { "" } } } { "" } }
 
 SYMBOL: limpl
 SYMBOL: land
