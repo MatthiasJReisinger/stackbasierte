@@ -101,7 +101,9 @@ DEFER: is-satisfied-at-world?
     rot call( ? ? -- ? ) ;
 
 : get-reachable-worlds ( n assoc -- seq )
-    at dup "@" swap index head ;
+    at
+    dup "@" swap index
+    head ;
 
 ! Takes an array (seq1) with three elements: the index of a world, a model and
 ! a formula. Outputs an array (seq2) of boolean values.
