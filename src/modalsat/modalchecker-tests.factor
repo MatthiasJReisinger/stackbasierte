@@ -1,7 +1,7 @@
 ! Copyright (C) 2013 Your name.
 ! See http://factorcode.org/license.txt for BSD license.
-USING: tools.test modalsat ;
-IN: modalsat.tests
+USING: tools.test modalchecker ;
+IN: modalchecker.tests
 
 [ t ] [ 1 H{ { 1 { 1 "@" "p1" "p2" } } } [ land [ "p1" ] [ "p2" ] ] is-satisfied-at-world? ] unit-test
 [ f ] [ 1 H{ { 1 { 1 "@" "p1" } } } [ land [ "p1" ] [ "p2" ] ] is-satisfied-at-world? ] unit-test

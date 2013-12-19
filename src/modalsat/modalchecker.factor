@@ -2,7 +2,7 @@
 ! See http://factorcode.org/license.txt for BSD license.
 USING: kernel sequences math arrays strings io assocs quotations
        prettyprint combinators ;
-IN: modalsat
+IN: modalchecker
 
 ! Model representation:
 !
