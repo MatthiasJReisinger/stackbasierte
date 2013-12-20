@@ -95,10 +95,9 @@ DEFER: is-satisfied-at-world?
 : evaluate-operand ( seq -- ? )
     split-up is-satisfied-at-world? ;
 
-: propositional-connective ( seq1 seq2 quot -- ? ) 
-    rot evaluate-operand
-    rot evaluate-operand
-    rot call( ? ? -- ? ) ;
+: propositional-connective ( seq1 seq2 -- ? ? ) 
+    swap evaluate-operand
+    swap evaluate-operand ;
 
 : get-reachable-worlds ( n assoc -- seq )
     at
@@ -117,23 +116,21 @@ DEFER: is-satisfied-at-world?
     [ evaluate-operand ]
     map ;
 
-: modal-connective ( seq1 seq2 quot -- ? )
-    nip swap evaluate-reachable
-    swap call( seq -- ? ) ;
+: modal-connective ( seq1 seq2 -- seq3 )
+    drop evaluate-reachable ;
 
 ! Takes a connective (symb) as input. Outputs a quotation whose
-! first element is a quotation of the form [ coneval ] where 'coneval'
-! is a word that contains the evaluation logic for some connective.
-! The second element of the output quotation is either the word
-! 'propositional-connective' or 'modal-connective' depending
-! on the type of connective (symb) supplied as input.
+! first element is either the word 'propositional-connective' or
+! 'modal-connective' depending on the type of connective (symb)
+! supplied as input. The second word in the quotation is a word
+! which contains the evalutation logic of the connective.
 : make-connective-quotation ( symb -- quot ) 
-    { { limpl [ [ [ bimpl ] propositional-connective ] ] }
-      { lnot [ [ [ bnot ] propositional-connective ] ] }
-      { lor [ [ [ bor ] propositional-connective ] ] }
-      { land  [ [ [ band ] propositional-connective ] ] }
-      { box [ [ [ mbox ] modal-connective ] ] } 
-      { dia [ [ [ mdia ] modal-connective ] ] } } case ;
+    { { limpl [ [ propositional-connective bimpl ] ] }
+      { lnot [ [ propositional-connective  bnot ] ] }
+      { lor [ [ propositional-connective bor ] ] }
+      { land  [ [ propositional-connective band ] ] }
+      { box [ [ modal-connective mbox ] ] } 
+      { dia [ [ modal-connective mdia ] ] } } case ;
 
 : is-satisfied-at-world? ( n assoc seq -- ? ) 
     dup is-atom? 
