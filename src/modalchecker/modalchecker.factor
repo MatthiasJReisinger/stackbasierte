@@ -121,6 +121,12 @@ DEFER: is-satisfied-at-world?
     nip swap evaluate-reachable
     swap call( seq -- ? ) ;
 
+! Takes a connective (symb) as input. Outputs a quotation whose
+! first element is a quotation of the form [ coneval ] where 'coneval'
+! is a word that contains the evaluation logic for some connective.
+! The second element of the output quotation is either the word
+! 'propositional-connective' or 'modal-connective' depending
+! on the type of connective (symb) supplied as input.
 : make-connective-quotation ( symb -- quot ) 
     { { limpl [ [ [ bimpl ] propositional-connective ] ] }
       { lnot [ [ [ bnot ] propositional-connective ] ] }
