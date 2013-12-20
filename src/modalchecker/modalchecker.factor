@@ -49,7 +49,7 @@ SYMBOL: dia
     tail ;
 
 ! Takes as input the wold's index (n) together with
-! the model (assoc) and a forumla (seq) which simply consists
+! the model (assoc) and a formula (seq) which simply consists
 ! of an atom. Outputs a bool that indicates whether
 ! the given atom is true at the given world within the
 ! given model.
@@ -57,7 +57,7 @@ SYMBOL: dia
     first -rot get-atoms-in-world member? ;
 
 ! Takes as input the wold's index (n) together with the model (assoc) and a
-! forumla (seq1) which has the form { conn op1 op2 } where conn is a connective,
+! formula (seq1) which has the form { conn op1 op2 } where conn is a connective,
 ! and op1 and op2 are themselves formulas. This input is transformed so that it
 ! can be used to evaluate the given formula (seq1). Therefore it ouputs two
 ! arrays (seq2 and seq3) which will be used to evaluate the operands. The
