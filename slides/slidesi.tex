@@ -89,6 +89,59 @@ $3$ & $\textcolor<8->{magenta}{q}$ & & $4$ & $\textcolor<5>{magenta}{p}$
 \end{center}
 \end{frame}
 
+\begin{frame}{Entwicklung}
+\bi
+  \item Implementierung in Factor
+  \item Colon Definitions in Vocabulary File
+  \item Zus\"atzlich Unit-Tests in separatem File
+  \item Ausf\"uhrung im Factor-Interpreter
+  \item Besondere Aspekte des Factor-Paradigmas:
+  \bi
+    \item Built-In Datenstrukturen
+    \item Quotations
+  \ei
+\ei
+\end{frame}
+
+\begin{frame}{Repr\"asentation von Formeln}
+\bi
+  \item Mittels Sequences
+  \item Beispiele:
+\ei
+
+\begin{center}
+\begin{tabular}{l|l}
+Formel & Darstellung als Sequence \\
+\hline
+$p \wedge q$ & \lstinline!\{ land \{ "p" \} \{ "q" \} \}! \\
+$p \vee q$ & \lstinline!\{ lor \{ "p" \} \{ "q" \} \}! \\
+$\Box (p \wedge \lozenge q)$ & \lstinline!\{ box \{ band \{ "p" \} \{ dia \{ "q" \} \{ "" \} \} \} \}! \\
+... & ...
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Repr\"asentation des Kripke Modells}
+\bi
+  \item Mittels Hash Map
+  \item Enth\"alt f\"ur jede Welt:
+  \bi
+    \item Adjazenzliste
+    \item Liste der wahren Atome
+  \ei
+  \item Beispiel:
+\ei
+
+\begin{lstlisting}[xleftmargin=50pt]
+H{
+  { 1 { 2      "@"  "p" "q" } }
+  { 2 { 2 3 4  "@"  "p"     } }
+  { 3 { 4      "@"  "q"     } }
+  { 4 { 4      "@"  "p"     } }
+}
+\end{lstlisting}
+\end{frame}
+
 \begin{frame}[c,allowframebreaks]
 \begin{center}
 \Huge
