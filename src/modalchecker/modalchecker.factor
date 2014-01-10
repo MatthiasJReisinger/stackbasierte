@@ -1,4 +1,4 @@
-! Copyright (C) 2013 <names>.
+! Copyright (C) 2013 Gerald Berger, Benjamin Kiesl, Matthias Reisinger.
 ! See http://factorcode.org/license.txt for BSD license.
 USING: kernel sequences math arrays strings io assocs quotations
        prettyprint combinators ;
