@@ -1,53 +1,53 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usetikzlibrary{arrows}
 
+%\begin{frame}{Einf\"uhrung}
+%\bi
+%\item Wir betrachten \cemph{modallogische Formeln}, aufgebaut durch 
+%\bi
+%	\item \cemph{Atome} $\mathcal{P} = \{p_1,p_2,p_3,\ldots\}$,
+%	\item un\"are Junktoren $\neg, \Box, \lozenge$,
+%	\item bin\"are Junktoren $\impl, \wedge, \vee$.
+%\ei
+%\ms
+%\item \blue{Beispiele:} 
+%\bi
+% \item $\Box p_1 \impl p_1$, 
+% \item $\neg p_2 \vee \Box\lozenge p_1$,
+% \item $\Box p_1 \impl \Box \Box p_1$.
+%\ei
+%\ei
+%\end{frame}
+%
+%\begin{frame}{Einf\"uhrung (fgs.)}
+%Eine \cemph{Kripke-Interpretation} (Interpretation) ist ein Tripel $\mathcal{M} = \langle W, R, v\rangle$, wobei\pause
+%\bi
+%	\item $W$ eine nicht-leere Menge ist (die Menge der \cemph{m\"oglichen Welten}),\pause
+%	\item $R \subseteq W \times W$,\pause
+%	\item $v : W \times \mathcal{P} \rightarrow \{0,1\}$.
+%\ei
+%
+%\bs
+%\pause
+%
+%\ithand\ Interpretationen definieren Graphen!
+%\end{frame}
+%
+%\begin{frame}{Einf\"uhrung (fgs.)}
+%Sei $\mathcal{M} = \langle W, R, v\rangle$ eine Interpretation und $w \in W$. Wir definieren $\mathcal{M}, w \models \varphi$ f\"ur alle Formeln $\varphi$ wie folgt:
+%\bi
+%	\item $\mathcal{M}, w \models p$ $\iff$ $v(w,p) = 1$ f\"ur ein Atom $p$.
+%	\item $\mathcal{M}, w \models \varphi_1 \wedge \varphi_2$ $\iff$ $\mathcal{M}, w \models \varphi_1$ und $\mathcal{M}, w \models \varphi_2$.
+%	\item $\mathcal{M}, w \models \varphi_1 \vee \varphi_2$ $\iff$ $\mathcal{M}, w \models \varphi_1$ oder $\mathcal{M}, w \models \varphi_2$.
+%	\item $\mathcal{M}, w \models \varphi_1 \impl \varphi_2$ $\iff$ $\mathcal{M}, w \not\models \varphi_1$ oder $\mathcal{M}, w \models \varphi_2$.
+%	\item $\mathcal{M}, w \models \neg\varphi$ $\iff$ $\mathcal{M}, w \not\models \varphi$.\pause
+%	\item $\mathcal{M}, w \models \Box\varphi$ $\iff$ $\mathcal{M}, w' \models \varphi$ \red{f\"ur alle Welten $w'$ mit $wRw'$}.
+%	\item $\mathcal{M}, w \models \lozenge\varphi$ $\iff$ $\mathcal{M}, w' \models \varphi$ \red{f\"ur mindestens eine Welt $w'$ mit $wRw'$}.
+%	
+%\ei
+%\end{frame}
+
 \begin{frame}{Einf\"uhrung}
-\bi
-\item Wir betrachten \cemph{modallogische Formeln}, aufgebaut durch 
-\bi
-	\item \cemph{Atome} $\mathcal{P} = \{p_1,p_2,p_3,\ldots\}$,
-	\item un\"are Junktoren $\neg, \Box, \lozenge$,
-	\item bin\"are Junktoren $\impl, \wedge, \vee$.
-\ei
-\ms
-\item \blue{Beispiele:} 
-\bi
- \item $\Box p_1 \impl p_1$, 
- \item $\neg p_2 \vee \Box\lozenge p_1$,
- \item $\Box p_1 \impl \Box \Box p_1$.
-\ei
-\ei
-\end{frame}
-
-\begin{frame}{Einf\"uhrung (fgs.)}
-Eine \cemph{Kripke-Interpretation} (Interpretation) ist ein Tripel $\mathcal{M} = \langle W, R, v\rangle$, wobei\pause
-\bi
-	\item $W$ eine nicht-leere Menge ist (die Menge der \cemph{m\"oglichen Welten}),\pause
-	\item $R \subseteq W \times W$,\pause
-	\item $v : W \times \mathcal{P} \rightarrow \{0,1\}$.
-\ei
-
-\bs
-\pause
-
-\ithand\ Interpretationen definieren Graphen!
-\end{frame}
-
-\begin{frame}{Einf\"uhrung (fgs.)}
-Sei $\mathcal{M} = \langle W, R, v\rangle$ eine Interpretation und $w \in W$. Wir definieren $\mathcal{M}, w \models \varphi$ f\"ur alle Formeln $\varphi$ wie folgt:
-\bi
-	\item $\mathcal{M}, w \models p$ $\iff$ $v(w,p) = 1$ f\"ur ein Atom $p$.
-	\item $\mathcal{M}, w \models \varphi_1 \wedge \varphi_2$ $\iff$ $\mathcal{M}, w \models \varphi_1$ und $\mathcal{M}, w \models \varphi_2$.
-	\item $\mathcal{M}, w \models \varphi_1 \vee \varphi_2$ $\iff$ $\mathcal{M}, w \models \varphi_1$ oder $\mathcal{M}, w \models \varphi_2$.
-	\item $\mathcal{M}, w \models \varphi_1 \impl \varphi_2$ $\iff$ $\mathcal{M}, w \not\models \varphi_1$ oder $\mathcal{M}, w \models \varphi_2$.
-	\item $\mathcal{M}, w \models \neg\varphi$ $\iff$ $\mathcal{M}, w \not\models \varphi$.\pause
-	\item $\mathcal{M}, w \models \Box\varphi$ $\iff$ $\mathcal{M}, w' \models \varphi$ \red{f\"ur alle Welten $w'$ mit $wRw'$}.
-	\item $\mathcal{M}, w \models \lozenge\varphi$ $\iff$ $\mathcal{M}, w' \models \varphi$ \red{f\"ur mindestens eine Welt $w'$ mit $wRw'$}.
-	
-\ei
-\end{frame}
-
-\begin{frame}{Einf\"uhrung (fgs.)}
 \bi
 \item {\bf Aufgabenstellung:} Gegeben eine modallogische Formel $\varphi$, eine (endliche) Interpretation $\mathcal{M} = \langle W, R, v \rangle$, sowie eine Welt $w \in W$, \"uberpr\"ufe ob $\mathcal{M},w \models \varphi$.
 \ei
@@ -105,7 +105,7 @@ $3$ & $\textcolor<8->{magenta}{q}$ & & $4$ & $\textcolor<5>{magenta}{p}$
 
 \begin{frame}{Repr\"asentation von Formeln}
 \bi
-  \item Mittels Sequences
+  \item Mittels \cemph{Sequences}
   \item Beispiele:
 \ei
 
@@ -123,7 +123,7 @@ $p \wedge \lozenge q$ & \lstinline!\{ land \{ "p" \} \{ dia \{ "q" \} \{ "" \} \
 
 \begin{frame}[fragile]{Repr\"asentation des Kripke Modells}
 \bi
-  \item Mittels Hash Map
+  \item Mittels \cemph{Hash Map}
   \item Enth\"alt f\"ur jede Welt:
   \bi
     \item Adjazenzliste

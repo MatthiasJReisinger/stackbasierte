@@ -1,4 +1,4 @@
-! Copyright (C) 2013 Your name.
+! Copyright (C) 2013 Gerald Berger, Benjamin Kiesl, Matthias Reisinger.
 ! See http://factorcode.org/license.txt for BSD license.
 USING: tools.test modalchecker ;
 IN: modalchecker.tests
